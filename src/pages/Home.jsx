@@ -308,13 +308,13 @@ export default function Home() {
                         <img src={hospitalERPImage} className="slideImage lefts" data-project="hospital-erp"
                             data-side="left" data-rot="45" alt="Hospital ERP project" />
                         <img src={courseFlowImage} className="slideImage lefts2"
-                            data-project="dashboard-concept" data-side="left" data-rot="45" alt="Dashboard interface concept" />
+                            data-project="lms" data-side="left" data-rot="45" alt="Dashboard interface concept" />
                         <img src={sanaulImage} className="slideImage center" data-project="sanaul-portfolio"
                             data-side="left" data-rot="0" alt="Sanaul portfolio project" />
                         <img src={petBuddyImage} className="slideImage Rights" data-project="pet-buddy"
                             data-side="right" data-rot="135" alt="Pet Buddy project" />
                         <img src={ecommerceImage} className="slideImage Rights"
-                            data-project="commerce-concept" data-side="right" data-rot="135" alt="E-commerce interface concept" />
+                            data-project="E-Commerce" data-side="right" data-rot="135" alt="E-commerce interface concept" />
                     </div>
                     <div className="projects-content">
                         <div className="d-flex flex-column justify-content-center align-items-center">

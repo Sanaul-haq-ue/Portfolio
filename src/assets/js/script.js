@@ -617,33 +617,33 @@ export function initPortfolioScripts() {
     const projectData = {
         'hospital-erp': {
             title: 'Hospital ERP',
-            description: 'A practical hospital management platform that brings patients, appointments, billing, and daily operations into one clear workflow.',
+            description: 'Single-clinic management system built with Laravel REST API, Sanctum, MySQL, and React for managing patients, appointments, doctors, consultations, prescriptions, medical records, billing, and reports.',
             role: 'Full-Stack Developer',
-            stack: 'Laravel · PHP · MySQL'
+            stack: 'LARAVEL · REACT · MySQL · API (SANCTUM · AXIOS)'
         },
-        'dashboard-concept': {
-            title: 'Dashboard Concept',
+        'lms': {
+            title: 'LMS',
             description: 'A focused interface concept for turning complex data into clear, fast, and useful daily decisions.',
-            role: 'UI Developer',
-            stack: 'HTML · CSS · JavaScript'
+            role: 'Developer',
+            stack: 'LARAVEL · MySQL · JS · JQUERY · AJAX · BOOTSTRAP'
         },
         'sanaul-portfolio': {
             title: 'Sanaul Portfolio',
             description: 'A motion-led portfolio experience combining backend engineering, frontend craft, and a distinctly personal visual language.',
-            role: 'Designer & Developer',
-            stack: 'HTML · CSS · GSAP'
+            role: 'Developer',
+            stack: 'REACT · HTML · CSS · GSAP'
         },
         'pet-buddy': {
             title: 'Pet Buddy',
-            description: 'A friendly digital experience designed to make pet care information and everyday interaction feel simple and approachable.',
-            role: 'Web Developer',
-            stack: 'WordPress · PHP · CSS'
+            description: 'Laravel-based pet care and e-commerce platform for discovering pet services, managing appointments, and purchasing pet products.',
+            role: 'Developer',
+            stack: 'LARAVEL · MySQL · JS · JQUERY · AJAX · BOOTSTRAP'
         },
-        'commerce-concept': {
-            title: 'Commerce Concept',
+        'E-Commerce': {
+            title: 'E-Commerce',
             description: 'A clean e-commerce direction focused on product discovery, trust, and a frictionless path from browsing to purchase.',
-            role: 'Frontend Developer',
-            stack: 'UI/UX · JavaScript · WooCommerce'
+            role: 'Developer',
+            stack: 'LARAVEL · MySQL · JS · AJAX · BOOTSTRAP'
         }
     };
 
