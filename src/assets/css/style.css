@@ -1329,6 +1329,7 @@ body.nav-open {
 @media (max-width: 640px) {
   .cf-images .sliding-images {
     height: 42vh;
+    top: -81px;
   }
 
   .cf-images .slideImage {

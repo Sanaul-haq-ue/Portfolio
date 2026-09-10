@@ -623,13 +623,13 @@ export function initPortfolioScripts() {
         },
         'lms': {
             title: 'LMS',
-            description: 'A focused interface concept for turning complex data into clear, fast, and useful daily decisions.',
+            description: 'A Laravel-based Learning Management System for managing courses, students, instructors, and educational content.',
             role: 'Developer',
             stack: 'LARAVEL · MySQL · JS · JQUERY · AJAX · BOOTSTRAP'
         },
         'sanaul-portfolio': {
             title: 'Sanaul Portfolio',
-            description: 'A motion-led portfolio experience combining backend engineering, frontend craft, and a distinctly personal visual language.',
+            description: 'A React-based personal portfolio showcasing my skills, projects, experience, and web development work.',
             role: 'Developer',
             stack: 'REACT · HTML · CSS · GSAP'
         },
