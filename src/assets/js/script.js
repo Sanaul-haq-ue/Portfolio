@@ -1,99 +1,12 @@
 /**
  * Sanaul Portfolio - Main Interactive & Animation Scripts
- * Includes: Preloader, Orbit Animation, Line Shadow Text, Word Rotate,
+ * Includes: Orbit Animation, Line Shadow Text, Word Rotate,
  * Lenis Smooth Scroll, Hero Services Pin Timeline, and Sliding Images Fan-Out
  */
 
 export function initPortfolioScripts() {
 
-/* ═══════════ MODULE 1: PRELOADER ═══════════ */
-(function () {
-    var CFG = {
-        minShow: 3000,
-        maxWait: 5000,
-        waitForPage: true,
-        oncePerSession: false,
-        lockScroll: true
-    };
-
-    var el = document.getElementById("preloader");
-    if (!el) return;
-
-    var root = document.documentElement;
-
-    var exiting = false;
-    var readyAt = 0;
-    var pageLoaded = false;
-    var minTimer, hardTimer;
-
-    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (CFG.oncePerSession) {
-        try {
-            if (sessionStorage.getItem("preloaderSeen")) {
-                el.parentNode && el.parentNode.removeChild(el);
-                window.dispatchEvent(new CustomEvent("preloader:done"));
-                return;
-            }
-            sessionStorage.setItem("preloaderSeen", "1");
-        } catch (e) { }
-    }
-
-    if (CFG.lockScroll) {
-        try { history.scrollRestoration = "manual"; } catch (e) { }
-        window.scrollTo(0, 0);
-        root.classList.add("preloader-lock");
-    }
-
-    function finish() {
-        if (exiting) return;
-        exiting = true;
-        clearTimeout(minTimer);
-        clearTimeout(hardTimer);
-
-        var cleanup = function () {
-            if (CFG.lockScroll) root.classList.remove("preloader-lock");
-            if (el.parentNode) el.parentNode.removeChild(el);
-
-            if (window.__cfLenis) {
-                try { window.__cfLenis.resize(); } catch (err) { }
-            }
-            if (window.ScrollTrigger) ScrollTrigger.refresh();
-            window.dispatchEvent(new CustomEvent("preloader:done"));
-        };
-
-        el.classList.add("hidden");
-        setTimeout(cleanup, 800);
-    }
-
-    function check() {
-        if (exiting || !readyAt) return;
-        if (!reduced && Date.now() - readyAt < CFG.minShow) return;
-        if (CFG.waitForPage && !pageLoaded) return;
-        finish();
-    }
-
-    function markReady() {
-        if (readyAt) return;
-        readyAt = Date.now();
-        minTimer = setTimeout(check, reduced ? 0 : CFG.minShow);
-        check();
-    }
-
-    markReady();
-
-    if (document.readyState === "complete") {
-        pageLoaded = true;
-    } else {
-        window.addEventListener("load", function () {
-            pageLoaded = true;
-            check();
-        }, { once: true });
-    }
-
-    hardTimer = setTimeout(finish, CFG.maxWait);
-})();
-/* ═══════════ MODULE 2: ORBITING TECH ICONS ═══════════ */
+/* ═══════════ MODULE 1: ORBITING TECH ICONS ═══════════ */
 (function () {
     "use strict";
 
@@ -553,17 +466,7 @@ export function initPortfolioScripts() {
         });
     }
 
-    const pre = document.querySelector('#preloader, .preloader, [data-preloader]');
-    if (pre) {
-        window.addEventListener('preloader:done', go, { once: true });
-        const watch = new MutationObserver(() => {
-            if (!document.documentElement.classList.contains('preloader-lock')) {
-                watch.disconnect(); go();
-            }
-        });
-        watch.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-        setTimeout(go, 4500);
-    } else if (document.readyState === 'complete') {
+    if (document.readyState === 'complete') {
         requestAnimationFrame(go);
     } else {
         window.addEventListener('load', go, { once: true });
@@ -588,251 +491,155 @@ export function initPortfolioScripts() {
     };
 })();
 
-/* ═══════════ MODULE 7: SLIDING IMAGES FAN-OUT (cfImages / Projects) ═══════════ */
+/* MODULE 7: SCROLL-REVEALED PROJECT GALLERY */
 (function () {
     if (!window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    const CFG = {
-        spread: 0.52,
-        xCurve: 0.80,
-        drop: 46,
-        dropCurve: 1.35,
-        tilt: 8,
-        useDataRot: false,
-        restScale: 0.9,
-        fanScale: 0.92,
-        centreGrow: 1.06,
-        manual: {},
-        px: { pad: 90, fan: 460, hold: 130 },
-        stagger: 0.07,
-        scrub: 0.1
-    };
+    const section = document.querySelector('.cf-gallery');
+    if (!section) return;
 
-    const sec = document.querySelector('.cf-images');
-    if (!sec) return;
-    const nodes = gsap.utils.toArray('.slideImage', sec);
-    if (!nodes.length) return;
+    const images = gsap.utils.toArray('.cf-gallery__artwork img', section);
+    if (images.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const projectData = {
-        'hospital-erp': {
-            title: 'Hospital ERP',
-            description: 'Single-clinic management system built with Laravel REST API, Sanctum, MySQL, and React for managing patients, appointments, doctors, consultations, prescriptions, medical records, billing, and reports.',
-            role: 'Full-Stack Developer',
-            stack: 'LARAVEL · REACT · MySQL · API (SANCTUM · AXIOS)'
-        },
-        'lms': {
-            title: 'LMS',
-            description: 'A Laravel-based Learning Management System for managing courses, students, instructors, and educational content.',
-            role: 'Developer',
-            stack: 'LARAVEL · MySQL · JS · JQUERY · AJAX · BOOTSTRAP'
-        },
-        'sanaul-portfolio': {
-            title: 'Sanaul Portfolio',
-            description: 'A React-based personal portfolio showcasing my skills, projects, experience, and web development work.',
-            role: 'Developer',
-            stack: 'REACT · HTML · CSS · GSAP'
-        },
-        'pet-buddy': {
-            title: 'Pet Buddy',
-            description: 'Laravel-based pet care and e-commerce platform for discovering pet services, managing appointments, and purchasing pet products.',
-            role: 'Developer',
-            stack: 'LARAVEL · MySQL · JS · JQUERY · AJAX · BOOTSTRAP'
-        },
-        'E-Commerce': {
-            title: 'E-Commerce',
-            description: 'A clean e-commerce direction focused on product discovery, trust, and a frictionless path from browsing to purchase.',
-            role: 'Developer',
-            stack: 'LARAVEL · MySQL · JS · AJAX · BOOTSTRAP'
+    section.classList.add('is-animating');
+    const centreIndex = Math.floor(images.length / 2);
+    let timeline;
+
+    function buildGallery() {
+        if (timeline) {
+            if (timeline.scrollTrigger) timeline.scrollTrigger.kill(true);
+            timeline.kill();
         }
-    };
 
-    const spotlight = {
-        index: sec.querySelector('#projectIndex'),
-        title: sec.querySelector('#projectTitle'),
-        description: sec.querySelector('#projectDescription'),
-        role: sec.querySelector('#projectRole'),
-        stack: sec.querySelector('#projectStack'),
-        total: sec.querySelector('#projectTotal')
-    };
+        const cardWidth = images[0].getBoundingClientRect().width;
+        const spread = Math.max(0, Math.min(window.innerWidth * 0.32, window.innerWidth / 2 - cardWidth * 0.52));
 
-    const perSide = { left: 0, right: 0 };
-    const items = nodes.map(el => {
-        const centre = el.classList.contains('center');
-        const side = el.dataset.side === 'right' ? 'right' : 'left';
-        const rank = centre ? 0 : ++perSide[side];
-        return {
-            el, centre, rank,
-            dir: side === 'right' ? 1 : -1,
-            dataRot: parseFloat(el.dataset.rot) || 0,
-            x: 0, y: 0, rot: 0
-        };
-    });
-    const maxRank = Math.max(perSide.left, perSide.right, 1);
-
-    function selectProject(el) {
-        const data = projectData[el.dataset.project];
-        if (!data) return;
-
-        const index = nodes.indexOf(el) + 1;
-        spotlight.index.textContent = String(index).padStart(2, '0');
-        spotlight.title.textContent = data.title;
-        spotlight.description.textContent = data.description;
-        spotlight.role.textContent = data.role;
-        spotlight.stack.textContent = data.stack;
-        spotlight.total.textContent = String(nodes.length).padStart(2, '0');
-        nodes.forEach(node => node.classList.toggle('is-selected', node === el));
-    }
-
-    nodes.forEach(node => {
-        node.tabIndex = 0;
-        node.setAttribute('role', 'button');
-        node.addEventListener('click', () => selectProject(node));
-        node.addEventListener('keydown', event => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                selectProject(node);
-            }
-        });
-    });
-
-    const initialProject = nodes.find(node => node.classList.contains('center')) || nodes[0];
-    selectProject(initialProject);
-
-    const lenis = window.__cfLenis || null;
-
-    function measure() {
-        const stageW = sec.clientWidth;
-        const imgW = items[0].el.offsetWidth || stageW * 0.15;
-        const half = (stageW - imgW) / 2;
-
-        items.forEach(it => {
-            if (it.centre) { it.x = 0; it.y = 0; it.rot = 0; return; }
-
-            const m = CFG.manual[it.key];
-            if (m) {
-                it.x = m.x; it.y = m.y;
-                it.rot = m.rot !== undefined ? m.rot : it.dir * CFG.tilt * it.rank;
-                return;
-            }
-
-            let steps = 0, span = 0;
-            for (let r = 1; r <= maxRank; r++) span += Math.pow(CFG.xCurve, r - 1);
-            for (let r = 1; r <= it.rank; r++) steps += Math.pow(CFG.xCurve, r - 1);
-
-            it.x = it.dir * half * CFG.spread * (steps / span);
-            it.y = CFG.drop * (Math.pow(CFG.dropCurve, it.rank) - 1) / (CFG.dropCurve - 1);
-            it.rot = CFG.useDataRot ? it.dataRot : it.dir * CFG.tilt * it.rank;
-        });
-    }
-
-    function base() {
-        measure();
-        items.forEach(it => gsap.set(it.el, {
-            xPercent: -50, yPercent: -50,
-            x: 0, y: 0,
+        gsap.set(images, {
+            xPercent: -50,
+            yPercent: -50,
+            x: 0,
+            y: 0,
             rotation: 0,
-            scale: it.centre ? 1 : CFG.restScale,
-            zIndex: it.centre ? 50 : 40 - it.rank,
-            autoAlpha: 1,
+            scale: 0.76,
+            autoAlpha: 0.55,
             transformOrigin: '50% 50%',
             force3D: true
-        }));
-    }
+        });
+        images.forEach((image, index) => {
+            gsap.set(image, { zIndex: index === centreIndex ? 10 : index < centreIndex ? index + 1 : images.length - index });
+        });
 
-    let master = null;
-    function build() {
-        if (master) {
-            if (master.scrollTrigger) master.scrollTrigger.kill(true);
-            master.kill(); master = null;
-        }
-        measure();
-
-        const dFan = CFG.px.fan;
-        const total = CFG.px.pad + dFan + CFG.px.hold;
-
-        master = gsap.timeline({
-            defaults: { ease: 'none' },
+        timeline = gsap.timeline({
+            defaults: { ease: 'power2.out' },
             scrollTrigger: {
-                trigger: sec,
+                trigger: section,
                 start: 'top top',
-                end: '+=' + total,
+                end: () => '+=' + Math.max(window.innerHeight * 1.15, 760),
                 pin: true,
                 pinSpacing: true,
+                scrub: 0.65,
                 anticipatePin: 1,
-                scrub: CFG.scrub,
-                invalidateOnRefresh: true,
-                refreshPriority: -1,
-                onRefresh: measure
+                invalidateOnRefresh: true
             }
         });
 
-        items.forEach(it => {
-            if (it.centre) {
-                master.to(it.el,
-                    { scale: CFG.centreGrow, duration: dFan, ease: 'power2.out' },
-                    CFG.px.pad);
-                return;
-            }
-            master.fromTo(it.el,
-                { x: 0, y: 0, rotation: 0, scale: CFG.restScale },
-                {
-                    x: () => it.x,
-                    y: () => it.y,
-                    rotation: () => it.rot,
-                    scale: 1,
-                    duration: dFan * (1 - CFG.stagger * (it.rank - 1)),
-                    ease: 'power3.out'
-                },
-                CFG.px.pad + dFan * CFG.stagger * (it.rank - 1));
-        });
-
-        ScrollTrigger.sort();
-    }
-
-    if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
-        gsap.set(nodes, { autoAlpha: 1 });
-        return;
-    }
-
-    base();
-    build();
-
-    let pending = nodes.filter(n => !n.complete).length;
-    if (pending) {
-        nodes.forEach(n => {
-            if (n.complete) return;
-            const done = () => {
-                n.removeEventListener('load', done);
-                n.removeEventListener('error', done);
-                if (--pending === 0) { base(); ScrollTrigger.refresh(); }
-            };
-            n.addEventListener('load', done);
-            n.addEventListener('error', done);
+        images.forEach((image, index) => {
+            const distance = index - centreIndex;
+            const isCentre = distance === 0;
+            timeline.to(image, {
+                x: isCentre ? 0 : (spread / centreIndex) * distance,
+                y: isCentre ? 0 : Math.abs(distance) * 15,
+                rotation: isCentre ? 0 : distance * 7,
+                scale: isCentre ? 1.03 : 0.92,
+                autoAlpha: 1,
+                duration: 0.8
+            }, isCentre ? 0 : 0.12 + Math.abs(distance) * 0.08);
         });
     }
 
-    window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+    buildGallery();
+    let resizeTimer;
+    const onResize = () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            buildGallery();
+            ScrollTrigger.refresh();
+        }, 180);
+    };
+    window.addEventListener('resize', onResize);
+    window.__cfGalleryCleanup = () => {
+        window.removeEventListener('resize', onResize);
+        clearTimeout(resizeTimer);
+        if (timeline) timeline.kill();
+        section.classList.remove('is-animating');
+        window.__cfGalleryCleanup = null;
+    };
     if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(() => ScrollTrigger.refresh());
     }
+})();
+/* MODULE 8: CERTIFICATION CARD ENTRANCE */
+(function () {
+    if (!window.gsap || !window.ScrollTrigger) return;
 
-    let lastW = window.innerWidth, rt;
-    window.addEventListener('resize', () => {
-        if (window.innerWidth === lastW) return;
-        lastW = window.innerWidth;
-        clearTimeout(rt);
-        rt = setTimeout(() => { build(); ScrollTrigger.refresh(); }, 200);
+    const section = document.querySelector('.cf-certifications');
+    if (!section || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const cards = gsap.utils.toArray('.cf-cert-card', section);
+    if (!cards.length) return;
+
+    const entrances = [
+        { x: -180, y: 20, rotation: -12 },
+        { x: 0, y: -150, rotation: 0 },
+        { x: 180, y: 20, rotation: 360 },
+        { x: -130, y: 150, rotation: -10 },
+        { x: 130, y: 150, rotation: -360 }
+    ];
+
+    section.classList.add('is-scroll-revealing');
+    cards.forEach((card, index) => {
+        const entrance = entrances[index % entrances.length];
+        gsap.set(card, {
+            autoAlpha: 0,
+            x: entrance.x,
+            y: entrance.y,
+            rotation: entrance.rotation,
+            scale: 0.72,
+            transformOrigin: '50% 50%'
+        });
     });
 
-    window.cfImages = {
-        refresh() { build(); ScrollTrigger.refresh(); },
-        get timeline() { return master; }
+    const timeline = gsap.timeline({
+        scrollTrigger: {
+            trigger: section,
+            start: 'top 86%',
+            end: 'center center',
+            scrub: 0.45,
+            invalidateOnRefresh: true
+        }
+    });
+
+    cards.forEach((card, index) => {
+        timeline.to(card, {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            rotation: 0,
+            scale: 1,
+            duration: 0.65,
+            ease: 'power2.out'
+        }, index * 0.44);
+    });
+
+    window.__cfCertificationsCleanup = () => {
+        timeline.kill();
+        section.classList.remove('is-scroll-revealing');
+        window.__cfCertificationsCleanup = null;
     };
 })();
-
 /* ═══════════════════════════════════════════════════════
-   MODULE 8: MOBILE NAVIGATION DRAWER
+   MODULE 9: MOBILE NAVIGATION DRAWER
    ═══════════════════════════════════════════════════════ */
 (function () {
     'use strict';
@@ -906,7 +713,7 @@ export function initPortfolioScripts() {
     });
 
     /* Active link highlight based on scroll */
-    var sectionIds = ['home', 'services', 'projects', 'about', 'contact'];
+    var sectionIds = ['home', 'services', 'projects', 'gallery', 'about', 'skills', 'certifications', 'contact'];
     function updateActiveLink() {
         var scrollY = window.scrollY || window.pageYOffset;
         var active = '';
