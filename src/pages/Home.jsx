@@ -8,17 +8,19 @@ import sanaulImage from "../assets/images/Sanaul.png";
 import petBuddyImage from "../assets/images/Pet Buddy.png";
 import ecommerceImage from "../assets/images/e-commerce.png";
 import companylandingpage from "../assets/images/companylandingpage.png";
+import mahiEngineering from "../assets/images/mahiEngineering.png";
 
 
 // Add liveUrl and/or githubUrl for each project. The live site is used first;
 // projects without either URL remain unlinked.
 const projects = [
-    { name: "Hospital ERP (API Project)", category: "Full-Stack Application", description: "A clinic management platform for patients, appointments, consultations, prescriptions, records, billing, and reports.", stack: "Laravel · React · MySQL · Sanctum", image: hospitalERPImage, liveUrl: "", githubUrl: "", featured: true }, // Demo GitHub URL: replace with your repository.
-    { name: "Learning Management System", category: "Education Platform", description: "A Laravel learning platform for organizing courses, students, instructors, and educational content.", stack: "Laravel · MySQL · JavaScript · Bootstrap", image: courseFlowImage, liveUrl: "", githubUrl: "", featured: true },
-    { name: "Pet Buddy", category: "Service & E-commerce Platform", description: "A pet care platform concept for discovering services, managing appointments, and shopping for pet products.", stack: "Laravel · MySQL · JavaScript · Bootstrap", image: petBuddyImage, liveUrl: "", githubUrl: "", featured: true },
-    { name: "Sanaul Portfolio", category: "Personal Portfolio", description: "A React portfolio presenting development services, selected work, and a direct way to get in touch.", stack: "React · HTML · CSS · GSAP", image: sanaulImage, liveUrl: "", githubUrl: "" },
-    { name: "E-commerce", category: "E-commerce Platform", description: "A storefront concept focused on product discovery, clear product details, and a simple path to purchase.", stack: "Laravel · MySQL · JavaScript · Bootstrap", image: ecommerceImage, liveUrl: "", githubUrl: "" },
-    { name: "Company Landing Page", category: "Landing Page", description: "A storefront concept focused on product discovery, clear product details, and a simple path to purchase.", stack: "React · JavaScript · Bootstrap", image: companylandingpage, liveUrl: "https://responsive-company-landing-page.vercel.app/", githubUrl: "" },
+    { name: "Hospital ERP (API Project)", category: "Full-Stack Application", description: "A clinic management platform for patients, appointments, consultations, prescriptions, records, billing, and reports.", stack: "Laravel · React · MySQL · Sanctum", image: hospitalERPImage, liveUrl: "", githubUrl: "https://github.com/Sanaul-haq-ue/Hospital-ERP", featured: true }, // Demo GitHub URL: replace with your repository.
+    { name: "Learning Management System", category: "Education Platform", description: "A Laravel learning platform for organizing courses, students, instructors, and educational content.", stack: "Laravel · MySQL · JavaScript · Bootstrap", image: courseFlowImage, liveUrl: "", githubUrl: "https://github.com/Sanaul-haq-ue/Laravel-LMS", featured: true },
+    { name: "Pet Buddy", category: "Service & E-commerce Platform", description: "A pet care platform concept for discovering services, managing appointments, and shopping for pet products.", stack: "Laravel · MySQL · JavaScript · Bootstrap", image: petBuddyImage, liveUrl: "", githubUrl: "https://github.com/Sanaul-haq-ue/Pet-Buddy", featured: true },
+    { name: "Sanaul Portfolio", category: "Personal Portfolio", description: "A React portfolio presenting development services, selected work, and a direct way to get in touch.", stack: "React · HTML · CSS · GSAP", image: sanaulImage, liveUrl: "https://portfolio-sage-chi-96.vercel.app/", githubUrl: "" },
+    { name: "E-commerce", category: "E-commerce Platform", description: "A storefront concept focused on product discovery, clear product details, and a simple path to purchase.", stack: "Laravel · MySQL · JavaScript · Bootstrap", image: ecommerceImage, liveUrl: "", githubUrl: "https://github.com/Sanaul-haq-ue/Laravel-E-Commerce" },
+    { name: "Company Landing Page", category: "Landing Page", description: "A responsive company website designed to present business information, highlight services, and provide a clean, user-friendly browsing experience across devices.", stack: "React · JavaScript · Bootstrap", image: companylandingpage, liveUrl: "https://responsive-company-landing-page.vercel.app/", githubUrl: "" },
+    { name: "Mahi Engineering Automobiles Ltd", category: "Corporate Business Website", description: "Showcase automotive services, company information, client testimonials, and contact details.", stack: "Wordpress · Elementor", image: mahiEngineering, liveUrl: "https://mahiengineering.com/", githubUrl: "" },
 ];
 
 // Set `issuer` separately for every certificate to show its company or platform.
