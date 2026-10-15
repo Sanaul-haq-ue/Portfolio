@@ -113,7 +113,7 @@ export default function Home() {
                         Get in Touch <i className="fa-solid fa-arrow-right-long"></i>
                     </NavLink>
                     <div className="mobile-nav-socials mt-3">
-                        <a href="mailto:saimhaque55@gmail.com"><i className="fa-solid fa-envelope"></i> saimhaque55@gmail.com</a>
+                        {/* <a href="mailto:saimhaque55@gmail.com"><i className="fa-solid fa-envelope"></i> saimhaque55@gmail.com</a> */}
                         <span className="location"><i className="fa-solid fa-location-dot"></i> Dhaka, Bangladesh</span>
                     </div>
                 </div>
