@@ -36,7 +36,13 @@ export default function ContactMe() {
 
       document.getElementById("contactForm")?.reset();
       setErrors({});
-      setNotice({ type: "success", text: "Thanks! Your enquiry has been saved." });
+      const emailsSent = result.mailStatus?.ownerNotificationSent && result.mailStatus?.visitorReplySent;
+      setNotice({
+        type: "success",
+        text: emailsSent
+          ? "Thanks! Your enquiry is saved, and confirmation emails have been sent."
+          : "Your enquiry is saved, but one or more email notifications could not be sent.",
+      });
       window.clearTimeout(noticeTimer.current);
       noticeTimer.current = window.setTimeout(() => setNotice(null), 5000);
     }
