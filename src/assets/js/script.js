@@ -522,13 +522,15 @@ export function initPortfolioScripts() {
             y: 0,
             rotation: 0,
             scale: 0.76,
-            autoAlpha: 0.55,
+            autoAlpha: 0,
             transformOrigin: '50% 50%',
             force3D: true
         });
         images.forEach((image, index) => {
             gsap.set(image, { zIndex: index === centreIndex ? 10 : index < centreIndex ? index + 1 : images.length - index });
         });
+        // Keep the center image on top at the start; reveal the surrounding stack as it fans out.
+        gsap.set(images[centreIndex], { scale: 1, autoAlpha: 1, zIndex: images.length + 10 });
 
         timeline = gsap.timeline({
             defaults: { ease: 'power2.out' },
@@ -553,6 +555,7 @@ export function initPortfolioScripts() {
                 rotation: isCentre ? 0 : distance * 7,
                 scale: isCentre ? 1.03 : 0.92,
                 autoAlpha: 1,
+                zIndex: isCentre ? 10 : index < centreIndex ? index + 1 : images.length - index,
                 duration: 0.8
             }, isCentre ? 0 : 0.12 + Math.abs(distance) * 0.08);
         });

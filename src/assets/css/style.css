@@ -101,6 +101,7 @@ body {
   z-index: 9999;
   padding: 0 28px;
   white-space: nowrap;
+  backdrop-filter: blur(5px);
 }
 
 .nav-link {
